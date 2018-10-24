@@ -71,12 +71,14 @@ app.get('/now', (req, res, next) => {
 app.get('/:word/echo', (req, res) => {
   res.json({ echo: req.params.word })
   res.end()
-  next()
 })
 
 /** 10) Get input from client - Query parameters */
 // /name?first=<firstname>&last=<lastname>
-
+app.get('/name', (req, res) => {
+  res.json({ name: `${req.query.firstname} ${req.query.lastname}` })
+  res.end()
+})
   
 /** 11) Get ready for POST Requests - the `body-parser` */
 // place it before all the routes !
