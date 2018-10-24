@@ -50,6 +50,7 @@ app.get('/json', (req, res) => {
     message = message.toUpperCase()
   }
   res.json({"message": message })
+  res.end()
 })
  
  
@@ -58,19 +59,18 @@ app.get('/json', (req, res) => {
 
 
 /** 8) Chaining middleware. A Time server */
-// FIXME: currently produces
-// Error [ERR_HTTP_HEADERS_SENT]:  Cannot set headers after they are sent to the client
 app.get('/now', (req, res, next) => {
   req.time = new Date().toString()
   next()
-}, (req, res, next) => {
+}, (req, res) => {
   res.json({ time: req.time })
-  next()
+  res.end()
 })
 
 /** 9)  Get input from client - Route parameters */
-app.get('/:word/echo', (req, res, next) => {
+app.get('/:word/echo', (req, res) => {
   res.json({ echo: req.params.word })
+  res.end()
   next()
 })
 
@@ -92,4 +92,4 @@ app.get('/:word/echo', (req, res, next) => {
 
 //---------- DO NOT EDIT BELOW THIS LINE --------------------
 
- module.exports = app;
+module.exports = app;
