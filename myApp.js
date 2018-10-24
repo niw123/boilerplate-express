@@ -4,6 +4,8 @@ var app = express();
 
 require('dotenv').config()
 
+const bodyParser = require('body-parser')
+
 // --> 7)  Mount the Logger middleware here
 function logger(req, res, next) {
   console.log(`${req.method} ${req.path} - ${req.ip}`)
@@ -13,6 +15,7 @@ function logger(req, res, next) {
 app.use(logger)
 
 // --> 11)  Mount the body-parser middleware  here
+app.use(bodyParser.urlencoded({ extended: false }))
 
 
 /** 1) Meet the node console. */
