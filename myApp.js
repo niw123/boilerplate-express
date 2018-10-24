@@ -5,7 +5,12 @@ var app = express();
 require('dotenv').config()
 
 // --> 7)  Mount the Logger middleware here
+function logger(req, res, next) {
+  console.log(`${req.method} ${req.path} - ${req.ip}`)
+  next()
+}
 
+app.use(logger)
 
 // --> 11)  Mount the body-parser middleware  here
 
@@ -53,7 +58,15 @@ app.get('/json', (req, res) => {
 
 
 /** 8) Chaining middleware. A Time server */
-
+// FIXME: currently produces
+// Error [ERR_HTTP_HEADERS_SENT]:  Cannot set headers after they are sent to the client
+app.get('/now', (req, res, next) => {
+  req.time = new Date().toString()
+  next()
+}, (req, res, next) => {
+  res.json({ time: req.time })
+  next()
+})
 
 /** 9)  Get input from client - Route parameters */
 
